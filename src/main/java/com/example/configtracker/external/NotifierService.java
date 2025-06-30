@@ -13,19 +13,19 @@ public class NotifierService {
 
     @Retry(name = "externalNotifier", fallbackMethod = "fallback")
     public void notifyExternalSystem(ConfigChange change) {
-        logger.warn("🚨 Notifying external system about: {}", change.getDescription());
+        logger.warn("Notifying external system about: {}", change.getDescription());
 
         // Simulate failure for test
         if (change.getDescription().toLowerCase().contains("fail")) {
             throw new RuntimeException("Simulated failure");
         }
 
-        logger.info("✅ Notification sent successfully");
+        logger.info("Notification sent successfully");
     }
 
     // Fallback method must be public and match signature + Throwable
     public void fallback(ConfigChange change, Throwable t) {
-        logger.error("❌ Fallback: Failed to notify external system for [{}]. Reason: {}", change.getId(), t.getMessage());
+        logger.error("!!! Fallback: Failed to notify external system for [{}]. Reason: {}", change.getId(), t.getMessage());
     }
 }
 
